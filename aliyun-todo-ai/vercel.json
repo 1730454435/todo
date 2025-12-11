@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/process",
+      "methods": ["POST", "OPTIONS"],
+      "dest": "/api/process.js"
+    }
+  ]
+}
