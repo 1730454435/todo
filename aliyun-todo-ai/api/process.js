@@ -3,15 +3,15 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: '只支持POST请求' });
+  if   如果 (req.method === 'OPTIONS') return   返回 res.status(200).end();
+  if   如果 (req.method !== 'POST') return   返回 res.status(405).json({ error: '只支持POST请求' });
 
   try {
     const { image } = req.body;
-    if (!image) return res.status(400).json({ error: '没有收到图片数据' });
+    if   如果 (!image) return   返回 res.status(400).json({ error: '没有收到图片数据' });
 
     const apiKey = process.env.ALIYUN_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: '服务器配置错误' });
+    if   如果 (!apiKey) return   返回 res.status(500).json({ error: '服务器配置错误' });
 
     // 调用阿里云通义千问视觉模型
     const dashResponse = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation', {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "model": "qwen-vl-plus",
+        "model": "qwen3-vl-plus",
         "input": {
           "messages": [{
             "role": "user",
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       })
     });
 
-    if (!dashResponse.ok) throw new Error(`阿里云API请求失败: ${dashResponse.status}`);
+    if   如果 (!dashResponse.ok) throw new Error   错误(`阿里云API请求失败: ${dashResponse.status}`);
     const result = await dashResponse.json();
 
     // 解析返回的文本
@@ -60,4 +60,5 @@ export default async function handler(req, res) {
     console.error('处理错误:', error);
     res.status(500).json({ success: false, error: '处理失败: ' + error.message });
   }
+
 }
